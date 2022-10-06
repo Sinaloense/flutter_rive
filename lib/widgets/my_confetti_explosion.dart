@@ -3,43 +3,38 @@ import 'package:flutter/services.dart';
 
 import 'package:rive/rive.dart';
 
-enum RiveLoadingTypeEnum {
-   reset,
-   check,
-   error,
-}
+class MyConfettiExplosion extends StatefulWidget {
+  final bool value;
 
-class MyRiveLoadingCheckError extends StatefulWidget {
-  final RiveLoadingTypeEnum value;
-
-  const MyRiveLoadingCheckError({
+  const MyConfettiExplosion({
     Key? key,
     required this.value,
   }) : super(key: key);
 
   @override
-  State<MyRiveLoadingCheckError> createState() => _MyRiveLoadingCheckErrorState();
+  State<MyConfettiExplosion> createState() => _MyConfettiExplosionState();
 }
 
-class _MyRiveLoadingCheckErrorState extends State<MyRiveLoadingCheckError> {
+class _MyConfettiExplosionState extends State<MyConfettiExplosion> {
   // Variable para almacenar artboard
   Artboard? _riveArtboard;
 
   // Variable para almacenar resetInput
-  SMIInput<bool>? _resetInput;
+  SMIInput<bool>? _inputExplosion;
 
-  // Variable para almacenar checkInput
-  SMIInput<bool>? _checkInput;
+  // Almacenar si es el primer dibujado del widget
+  bool isFirstDraw = true;
 
-  // Variable para almacenar errorInput
-  SMIInput<bool>? _errorInput;
+  void changeState() {
+    _inputExplosion!.value = true;
+  }
 
   @override
   void initState() {
     super.initState();
 
     // Cargar animación desde un archivo
-    rootBundle.load('assets/checkerror.riv').then(
+    rootBundle.load('assets/confetti-explosion.riv').then(
       (data) async {
         // Cargar RiverFile.
         final file = RiveFile.import(data);
@@ -56,9 +51,7 @@ class _MyRiveLoadingCheckErrorState extends State<MyRiveLoadingCheckError> {
           _riveArtboard!.addController(controller);
 
           // Almacenar inputs para controlar animación
-          _resetInput = controller.findInput('Reset');
-          _checkInput = controller.findInput('Check');
-          _errorInput = controller.findInput('Error');
+          _inputExplosion = controller.findInput('Trigger explosion');
         }
 
         // Recargar widget
@@ -69,17 +62,11 @@ class _MyRiveLoadingCheckErrorState extends State<MyRiveLoadingCheckError> {
     );
   }
 
-  void changeState() {
-    if(widget.value == RiveLoadingTypeEnum.check) {
-      _checkInput!.value = true;
-      return;
-    }
-    if(widget.value == RiveLoadingTypeEnum.error) {
-      _errorInput!.value = true;
-      return;
-    }
+  @override
+  void reassemble() {
+    super.reassemble();
 
-    _resetInput!.value = true;
+    isFirstDraw = true;
   }
 
   @override
@@ -88,7 +75,12 @@ class _MyRiveLoadingCheckErrorState extends State<MyRiveLoadingCheckError> {
       return const SizedBox();
     }
 
-    changeState();
+    // Si no es la primera vez que se dibujara el widget
+    if(!isFirstDraw) {
+      changeState();
+    }
+
+    isFirstDraw = false;
 
     return Rive(artboard: _riveArtboard!);
   }

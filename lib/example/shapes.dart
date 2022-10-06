@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:rive/rive.dart';
@@ -17,15 +19,24 @@ class _ShapesState extends State<Shapes> {
       appBar: AppBar(
         title: const Text('Shapes'),
       ),
-      body: const Center(
-        child: SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: RiveAnimation.asset(
-            'assets/shapes.riv',
-            fit: BoxFit.fitWidth,
+      body: Stack(
+        children: [
+          const SizedBox(
+            height: double.infinity,
+            width: double.infinity,
+            child: RiveAnimation.asset(
+              'assets/shapes.riv',
+              fit: BoxFit.fitWidth,
+            ),
           ),
-        ),
+
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+            child: Container(
+              color: Colors.transparent
+            ),
+          ),
+        ],
       ),
     );
   }

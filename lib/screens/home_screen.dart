@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rive/example/confetti_explosion.dart';
 
 import 'package:flutter_rive/example/custom_controller.dart';
 import 'package:flutter_rive/example/example_state_machine.dart';
@@ -227,6 +228,20 @@ class Home extends StatelessWidget {
                     context,
                     MaterialPageRoute<void>(
                       builder: (context) => const Shapes(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                child: const Text('Confetti explosion'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const ConfettiExplosion(),
                     ),
                   );
                 },
