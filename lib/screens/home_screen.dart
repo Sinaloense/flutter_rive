@@ -5,11 +5,13 @@ import 'package:flutter_rive/example/custom_controller.dart';
 import 'package:flutter_rive/example/example_state_machine.dart';
 import 'package:flutter_rive/example/liquid_download.dart';
 import 'package:flutter_rive/example/little_machine.dart';
+import 'package:flutter_rive/example/magnifying_glass.dart';
 import 'package:flutter_rive/example/play_one_shot_animation.dart';
 import 'package:flutter_rive/example/play_pause_animation.dart';
 import 'package:flutter_rive/example/shapes.dart';
 import 'package:flutter_rive/example/simple_animated_emojis.dart';
 import 'package:flutter_rive/example/simple_animation.dart';
+import 'package:flutter_rive/example/simple_loader.dart';
 import 'package:flutter_rive/example/simple_machine_listener.dart';
 import 'package:flutter_rive/example/simple_state_machine.dart';
 import 'package:flutter_rive/example/state_loading_check_error.dart';
@@ -242,6 +244,34 @@ class Home extends StatelessWidget {
                     context,
                     MaterialPageRoute<void>(
                       builder: (context) => const ConfettiExplosion(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                child: const Text('Simple loader'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const SimpleLoader(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                child: const Text('Magnifying Glass'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (context) => const MagnifyingGlass(),
                     ),
                   );
                 },
